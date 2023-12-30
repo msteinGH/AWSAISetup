@@ -1,2 +1,2 @@
 # AWSAISetup
-SEtting up AI infra on AWS
+Setting up AI infra on AWS
