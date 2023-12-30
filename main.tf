@@ -1,0 +1,155 @@
+
+# do need to have credentials file ~/.aws/credentials set up via aws cli
+# aws configure
+# or edit manually:
+#
+# [default]
+# aws_secret_access_key = XXX
+# aws_access_key_id = YYY
+
+provider "aws" {
+	#region 		= "us-east-1"
+    region 		= "${var.region}"
+    shared_credentials_files = ["~/.aws/credentials"]
+}
+
+resource "aws_key_pair" "tf-generic-user-key" {
+  key_name   = "tf-generic-user-key"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAp62kAHeRBzDaz8QpqdhIlvgPtnOVx2q1v2nGnYwYdVRlrWUIL8B3NyvCAwebu/T2+QXjTphfOXfd8z5gExxXnjuv/ECUILVjxuzwM3eC9C1YGCVekPObY8HqjvhNvpdz/sZpU3FgXi8mj9JN2+li+tgPZfejyhuzCXJrYICQ/x6iV2sxD7Rlwd4ALSQoaHO+/x72FimkfidtSawxRJszghY38+TVd3yi2SPBCd36MQtYPqHxj1GuLQmG+VrYXvdndTcf56mHCqsWIxSeJMtFEXjbP3eDjHku12hZqp+Vyt4bNh9kK6IV/dPPLCXeyew7gIz6jFk4UJBABsHc95+6BQ=="
+}
+
+
+
+# slowing down individual executions
+# installing and starting helloworld tomcat on my-first-tf-instance-with-ssh-user-data-file at port 8080
+# http://IP_ADDRESS:8080/test/index.jsp
+  #module "sample_ec2_instances_with_user_data" {
+  #source = "./Modules/EC2"
+  #subnet = aws_subnet.tf-generic-subnet.id
+  #security_groups = [aws_security_group.tf-allow-tcp-8080-8081.id,aws_security_group.tf-allow-ssh.id]
+  #key_name = "tf-generic-user-key"
+#}
+
+
+# set up EC2 instance
+resource "aws_instance" "PlainUbuntu" {
+# plain Ubuntu SSD
+	ami = "ami-0c7217cdde317cfec" 
+	instance_type = "c5a.4xlarge"
+	key_name = "tf-generic-user-key"
+	# either subnet ID or network interface can be specified
+	# interface cannot be specified together with pupblic IP
+	# network_interface_id = aws_network_interface.tf_generic_network_interface.id
+  subnet_id       = aws_subnet.tf-generic-subnet.id
+	associate_public_ip_address = "true"
+  vpc_security_group_ids = [aws_security_group.tf-allow-ssh.id]
+	#user_data = "${file("user_data.sh")}"
+	tags = {
+		Name = "PlainUbuntu"
+	}
+}
+
+
+
+
+# create VPC
+resource "aws_vpc" "tf-generic-vpc" {
+  cidr_block = "10.0.0.0/16"
+  tags = {
+    Name = "tf-generic-vpc"
+  }
+}
+
+# create subnet
+resource "aws_subnet" "tf-generic-subnet" {
+  vpc_id            = aws_vpc.tf-generic-vpc.id
+
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = "${var.availability_zone}"
+
+  tags = {
+    Name = "tf-generic-subnet"
+  }
+}
+
+resource "aws_internet_gateway" "tf-my-internet-gateway" {
+  vpc_id = aws_vpc.tf-generic-vpc.id
+  tags = {
+    Name = "tf-my-internet-gateway"
+  }
+}
+
+resource "aws_route_table" "tf-my-route-table" {
+  vpc_id = aws_vpc.tf-generic-vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.tf-my-internet-gateway.id
+  }
+  tags = {
+    Name = "tf-my-route-table"
+  }
+}
+
+resource "aws_route_table_association" "tf-my-route-table-association" {
+ subnet_id = aws_subnet.tf-generic-subnet.id
+ route_table_id = aws_route_table.tf-my-route-table.id
+}
+
+# create security group inbound via HTTP port 8080/8081
+resource "aws_security_group" "tf-allow-tcp-8080-8081" {
+  name        = "tf-allow-tcp-8080"
+  description = "Allow ALL TCP on port 8080 inbound traffic"
+  vpc_id      = aws_vpc.tf-generic-vpc.id
+
+  ingress {
+    description      = "HTTP from 8080"
+    from_port        = 8080
+    to_port          = 8081
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  # outbound ALL protocols alllowed
+  # make sure to be able to reach amazon and other repos for package installations 
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "tf-allow-tcp-8080"
+  }
+}
+
+
+
+# create security group inbound via SSH from ALL, 
+resource "aws_security_group" "tf-allow-ssh" {
+  name        = "tf-allow-ssh"
+  description = "Allow SSH inbound traffic"
+  vpc_id      = aws_vpc.tf-generic-vpc.id
+
+  ingress {
+    description      = "SSH from ALL"
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  # outbound ALL protocols alllowed
+  # make sure to be able to reach amazon and other repos for package installations 
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    #ipv6_cidr_blocks = ["::/0"]
+  }
+  tags = {
+    Name = "tf-allow-ssh"
+  }
+}
+
+
