@@ -4,6 +4,7 @@
 sudo export DEBIAN_FRONTEND=noninteractive
 
 sudo apt update
+sudo NEEDRESTART_MODE=a apt install python3-pip python3.10-venv -y
 sudo apt install python3-pip python3.10-venv -y
 
 # crate venv and activate
@@ -23,9 +24,15 @@ pip install pandas transformers sentencepiece sacremoses torch
 
 mkdir AI
 cd AI
+curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/TranslationExample.py >> TranslationExample.py
+mkdir DataSets
+cd DataSets  
+curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/Datasets/datacamp_workspace_export_2023-12-29%2017%2015%2058_FaceBook_Articles.csv >> datacamp_workspace_export_2023-12-29_FaceBook_Articles.csv
+curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/Datasets/datacamp_workspace_export_2023-12-29%2017%2015%2058_FaceBook_Articles_short.csv >> datacamp_workspace_export_2023-12-29_FaceBook_Articles_short.csv
+curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/Datasets/datacamp_workspace_export_2023-12-29%2017%2015%2058_FaceBook_Articles_very_short.csv >> datacamp_workspace_export_2023-12-29_FaceBook_Articles_very_short.csv
+cd ..
 
-  curl https://raw.githubusercontent.com/msteinGH/TerraFormSamplesAWS/main/SampleData/StaticHtml/index.jsp >> index.jsp 
-  chgrp tomcat index.jsp 
+python TranslationExample.py
 
   exit
   

@@ -35,11 +35,9 @@ resource "aws_key_pair" "tf-generic-user-key" {
 resource "aws_instance" "PlainUbuntu" {
 # plain Ubuntu SSD
 	ami = "ami-0c7217cdde317cfec" 
-	instance_type = "c5a.4xlarge"
+	instance_type = "t2.micro"
+  #instance_type = "c5a.4xlarge"
 	key_name = "tf-generic-user-key"
-	# either subnet ID or network interface can be specified
-	# interface cannot be specified together with pupblic IP
-	# network_interface_id = aws_network_interface.tf_generic_network_interface.id
   subnet_id       = aws_subnet.tf-generic-subnet.id
 	associate_public_ip_address = "true"
   vpc_security_group_ids = [aws_security_group.tf-allow-ssh.id]
