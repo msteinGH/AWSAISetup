@@ -1,13 +1,17 @@
  #!/bin/bash
 # Ubuntu flavor
 
-sudo export DEBIAN_FRONTEND=noninteractive
-
 sudo apt update
 sudo NEEDRESTART_MODE=a apt install python3-pip python3.10-venv -y
-sudo apt install python3-pip python3.10-venv -y
 
-# crate venv and activate
+# mount new volume
+sudo mkdir /PythonVirtualEnvFolder
+
+# CHECK not working for Ubunut, just for Amazon Linux!!
+sudo mkfs -t xfs /dev/sdh
+sudo mount /dev/sdh /PythonVirtualEnvFolder
+# create venv and activate
+cd /PythonVirtualEnvFolder
 python3 -m venv .venv
 source .venv/bin/activate
 

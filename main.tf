@@ -32,9 +32,11 @@ resource "aws_key_pair" "tf-generic-user-key" {
 
 
 # set up EC2 instance
-resource "aws_instance" "PlainUbuntu" {
+resource "aws_instance" "plain-ubuntu-ec2" {
 # plain Ubuntu SSD
-	ami = "ami-0c7217cdde317cfec" 
+ami = "ami-0c7217cdde317cfec" 
+# AWS Linux EBS volumen mount working for AWS Linux
+ # ami = "ami-0b5eea76982371e91" 
 	instance_type = "t2.micro"
   #instance_type = "c5a.4xlarge"
 	key_name = "tf-generic-user-key"
@@ -43,9 +45,28 @@ resource "aws_instance" "PlainUbuntu" {
   vpc_security_group_ids = [aws_security_group.tf-allow-ssh.id]
 	#user_data = "${file("user_data.sh")}"
 	tags = {
-		Name = "PlainUbuntu"
+		Name = "tf-plain-ubuntu-ec2"
 	}
 }
+
+
+# create ebs volume for extended storage
+resource "aws_ebs_volume" "python-venv-ebs-volume" {
+  availability_zone = "${var.availability_zone}"
+  # size in GB
+  size       = 25
+  tags = {
+    Name = "tf-python-venv-ebs-volume"
+  }
+}
+
+resource "aws_volume_attachment" "python-venv-ebs-volume-attachment" {
+  device_name = "/dev/sdh"
+  volume_id   = aws_ebs_volume.python-venv-ebs-volume.id
+  instance_id = aws_instance.plain-ubuntu-ec2.id
+}
+
+
 
 
 
