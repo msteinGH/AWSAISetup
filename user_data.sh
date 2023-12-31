@@ -1,4 +1,4 @@
- #!/bin/bash
+#!/bin/bash
 # Ubuntu flavor
 
 echo "sudo apt update" >> ~/user_data.log
