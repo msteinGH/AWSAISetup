@@ -34,16 +34,24 @@ resource "aws_key_pair" "tf-generic-user-key" {
 # set up EC2 instance
 resource "aws_instance" "plain-ubuntu-ec2" {
 # plain Ubuntu SSD
-ami = "ami-0c7217cdde317cfec" 
+ ami = "ami-0c7217cdde317cfec" 
+# Ubuntu SSD, WITH PyTorch preinstalled
+# ami = "ami-05b5ef59e0e3e83b4"
 # AWS Linux EBS volumen mount working for AWS Linux
  # ami = "ami-0b5eea76982371e91" 
-	instance_type = "t2.micro"
-  #instance_type = "c5a.4xlarge"
+	# 1 GB 1 CPU
+  instance_type = "t2.micro"
+
+  # 32 GB 8 CPUs
+  #instance_type = "t2.2xlarge"
+
+  # 32 GB 16 CPUs
+  # instance_type = "c5a.4xlarge"
 	key_name = "tf-generic-user-key"
   subnet_id       = aws_subnet.tf-generic-subnet.id
 	associate_public_ip_address = "true"
   vpc_security_group_ids = [aws_security_group.tf-allow-ssh.id]
-	#user_data = "${file("user_data.sh")}"
+	user_data = "${file("user_data.sh")}"
 	tags = {
 		Name = "tf-plain-ubuntu-ec2"
 	}
