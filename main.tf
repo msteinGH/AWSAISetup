@@ -35,10 +35,9 @@ resource "aws_key_pair" "tf-generic-user-key" {
 resource "aws_instance" "plain-ubuntu-ec2" {
 # plain Ubuntu SSD
  ami = "ami-0c7217cdde317cfec" 
-# Ubuntu SSD, WITH PyTorch preinstalled
-# ami = "ami-05b5ef59e0e3e83b4"
-# AWS Linux EBS volumen mount working for AWS Linux
- # ami = "ami-0b5eea76982371e91" 
+  # Ubuntu SSD, WITH PyTorch preinstalled
+  # ami = "ami-05b5ef59e0e3e83b4"
+
 	# 1 GB 1 CPU
   instance_type = "t2.micro"
 
@@ -46,7 +45,9 @@ resource "aws_instance" "plain-ubuntu-ec2" {
   #instance_type = "t2.2xlarge"
 
   # 32 GB 16 CPUs
-  # instance_type = "c5a.4xlarge"
+  #instance_type = "c5a.4xlarge"
+
+
 	key_name = "tf-generic-user-key"
   subnet_id       = aws_subnet.tf-generic-subnet.id
 	associate_public_ip_address = "true"
@@ -62,7 +63,7 @@ resource "aws_instance" "plain-ubuntu-ec2" {
 resource "aws_ebs_volume" "python-venv-ebs-volume" {
   availability_zone = "${var.availability_zone}"
   # size in GB
-  size       = 25
+  size       = 100
   tags = {
     Name = "tf-python-venv-ebs-volume"
   }

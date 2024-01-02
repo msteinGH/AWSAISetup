@@ -1,71 +1,48 @@
 #!/bin/bash
 # Ubuntu flavor
+# NOT required for superuser!!
+# not executed for some strange reason???
 
-echo "sudo apt update" >> ~/user_data.log
-sudo apt update
-echo "sudo NEEDRESTART_MODE=a apt install jq python3-pip python3.10-venv -y" >> ~/user_data.log
-sudo NEEDRESTART_MODE=a apt install jq python3-pip python3.10-venv -y
+echo "whoami" >> ~ubuntu/user_data.log
+whoami >> ~ubuntu/user_data.log
+echo "apt update" >> ~ubuntu/user_data.log
+apt update
+echo "NEEDRESTART_MODE=a apt install jq python3-pip python3.10-venv -y" >> ~ubuntu/user_data.log
+NEEDRESTART_MODE=a apt install jq python3-pip python3.10-venv -y
 
 # mount new volume, create target mountpoint
-echo "sudo mkdir /extendedDisk" >> ~/user_data.log
-sudo mkdir /extendedDisk
+echo "mkdir /extendedDisk" >> ~ubuntu/user_data.log
+mkdir /extendedDisk
 
 # Helper commands
 # list available disks 
 # lsblk 
 # check if filesystem available eg.
-# sudo file -s /dev/nvme1n1
+# file -s /dev/nvme1n1
 
 # needs jq to identify unmounted disk name dynamically
 # creating small script dynamically to be executed via sudo
-echo "Creating mountdiskcommand" >> ~/user_data.log
+echo "Creating mountdiskcommand" >> ~ubuntu/user_data.log
 echo "mkfs -t xfs /dev/$(lsblk --fs --json | jq -r '.blockdevices[] | select(.children == null and .mountpoints == [null]) | .name')" >> mountdiskcommand
 echo "mount /dev/$(lsblk --fs --json | jq -r '.blockdevices[] | select(.children == null and .mountpoints == [null]) | .name') /extendedDisk" >> mountdiskcommand
 
-echo "chmod 755 mountdiskcommand" >> ~/user_data.log
+echo "chmod 755 mountdiskcommand" >> ~ubuntu/user_data.log
 chmod 755 mountdiskcommand
-#sudo mkfs -t xfs /dev/nvme1n1
-#sudo mount /dev/nvme1n1 /extendedDisk
-sudo ./mountdiskcommand
 
-echo "sudo chown ubuntu /extendedDisk" >> ~/user_data.log
-sudo chown ubuntu /extendedDisk
+./mountdiskcommand
 
-echo "mkdir /extendedDisk/ubuntuExtension" >> ~/user_data.log
-mkdir /extendedDisk/ubuntuExtension
+echo "chown ubuntu /extendedDisk" >> ~ubuntu/user_data.log
+chown ubuntu /extendedDisk
 
-cd ~
-mv .cache /extendedDisk/ubuntuExtension/
-ln -s /extendedDisk/ubuntuExtension/.cache .
-cd /extendedDisk/ubuntuExtension/
+echo "D/L user_data_non_root.sh" >> ~ubuntu/user_data.log
+curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/user_data_non_root.sh >> user_data_non_root.sh
 
-echo "python3 -m venv .venv" >> ~/user_data.log
-# create Python venv and activate
-python3 -m venv .venv
-source .venv/bin/activate
-cd ~
-ln -s /extendedDisk/ubuntuExtension/.venv .
+chmod 755 user_data_non_root.sh
+echo "sudo -u user_data_non_root.sh" >> ~ubuntu/user_data.log
 
-echo "pip install pandas" >> ~/user_data.log
-pip install pandas
-echo "pip install sacremoses" >> ~/user_data.log
-pip install sacremoses
-echo "pip install transformers sentencepieces" >> ~/user_data.log
-pip install transformers sentencepiece
-# pip install torch
+sudo -u user_data_non_root.sh
 
 
-mkdir AI
-cd AI
-curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/TranslationExample.py >> TranslationExample.py
-mkdir DataSets
-cd DataSets  
-curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/Datasets/datacamp_workspace_export_2023-12-29_FaceBook_Articles.csv >> datacamp_workspace_export_2023-12-29_FaceBook_Articles.csv
-curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/Datasets/datacamp_workspace_export_2023-12-29_FaceBook_Articles_short.csv >> datacamp_workspace_export_2023-12-29_FaceBook_Articles_short.csv
-curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/Datasets/datacamp_workspace_export_2023-12-29_FaceBook_Articles_very_short.csv >> datacamp_workspace_export_2023-12-29_FaceBook_Articles_very_short.csv
-cd ..
-
-# python TranslationExample.py
 
   exit
   
