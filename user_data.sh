@@ -38,7 +38,7 @@ chown ubuntu /extendedDisk
 echo "D/L user_data_non_root.sh" >> ~ubuntu/user_data.log
 curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/user_data_non_root.sh >> ~ubuntu/user_data_non_root.sh
 
-chmod 755 user_data_non_root.sh
+chmod 755 ~ubuntu/user_data_non_root.sh
 echo "sudo -u user_data_non_root.sh" >> ~ubuntu/user_data.log
 sudo -u ubuntu ~ubuntu/user_data_non_root.sh
 
