@@ -7,6 +7,7 @@ echo "whoami" >> ~ubuntu/user_data.log
 whoami >> ~ubuntu/user_data.log
 echo "apt update" >> ~ubuntu/user_data.log
 apt update
+# installing prerequs, jq for dnyamically mounting a disk/reading output from lsblk
 echo "NEEDRESTART_MODE=a apt install jq python3-pip python3.10-venv -y" >> ~ubuntu/user_data.log
 NEEDRESTART_MODE=a apt install jq python3-pip python3.10-venv -y
 
@@ -35,14 +36,11 @@ echo "chown ubuntu /extendedDisk" >> ~ubuntu/user_data.log
 chown ubuntu /extendedDisk
 
 echo "D/L user_data_non_root.sh" >> ~ubuntu/user_data.log
-curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/user_data_non_root.sh >> user_data_non_root.sh
+curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/user_data_non_root.sh >> ~ubuntu/user_data_non_root.sh
 
 chmod 755 user_data_non_root.sh
 echo "sudo -u user_data_non_root.sh" >> ~ubuntu/user_data.log
+sudo -u ubuntu ~ubuntu/user_data_non_root.sh
 
-sudo -u user_data_non_root.sh
-
-
-
-  exit
+exit
   
