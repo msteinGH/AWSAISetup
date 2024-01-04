@@ -33,6 +33,6 @@ curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/Datasets/data
 
 cd ~ubuntu
 
-curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/install_via_pip.sh >> TranslationExample.py
+curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/install_via_pip.sh >> install_via_pip.sh
 exit
   
