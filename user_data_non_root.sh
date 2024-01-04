@@ -10,7 +10,7 @@ if [ ! -d .cache ]; then
     mkdir .cache
 fi
 
-
+cd ~
 echo "moving .cache" >> ~/user_data_non_root.log
 cd ~
 mv .cache /extendedDisk/ubuntuExtension/
