@@ -3,8 +3,9 @@
 # working fine, incl. SSH access, java installation via user_data
  resource "aws_instance" "my-first-tf-instance-with-ssh-user-data-file" {
 	ami = "ami-0b5eea76982371e91" 
-	instance_type = "t2.micro"
-	key_name = "${var.key_name}"
+	# 1 GB 1 CPU
+  instance_type = "t2.micro"  
+ 	key_name = "${var.key_name}"
   subnet_id = "${var.subnet}"
   security_groups = "${var.security_groups}"
 	associate_public_ip_address = "true"
