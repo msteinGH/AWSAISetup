@@ -26,7 +26,7 @@ ln -s /extendedDisk/ubuntuExtension/.venv .
 
 
 
-echo "D/L AI contents" >> ~/user_data_non_root.log
+echo "D/L AI contents from https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/" >> ~/user_data_non_root.log
 mkdir AI
 cd AI
 curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/TranslationExample.py >> TranslationExample.py
@@ -38,6 +38,9 @@ curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/Datasets/data
 
 cd ~ubuntu
 
+echo "D/L and executing install_via_pip.sh" >> ~/user_data_non_root.log
 curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/install_via_pip.sh >> install_via_pip.sh
+chmod 755 install_via_pip.sh
+./install_via_pip
 exit
   

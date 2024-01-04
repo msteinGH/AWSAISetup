@@ -1,7 +1,6 @@
 #!/bin/bash
 # Ubuntu flavor
 # sudo NOT required for superuser!!
-# MOUNT needs to be re-executed after instance type change!!
 
 echo "whoami" >> ~ubuntu/user_data.log
 whoami >> ~ubuntu/user_data.log
@@ -20,12 +19,11 @@ mkdir /extendedDisk
 # lsblk 
 # check if filesystem available eg.
 # file -s /dev/nvme1n1
-# reload fstab (among others) via
-# systemctl daemon-reload
+
 
 # needs jq to identify unmounted disk name dynamically
 # creating small script dynamically to be executed via sudo
-# CHECK store disk name in VARIABLE
+# TODO store disk name in VARIABLE
 # DISK_NAME = "/dev/$(lsblk --fs --json | jq -r '.blockdevices[] | select(.children == null and .mountpoints == [null]) | .name')"
 # echo "DISK_NAME: ${DISK_NAME}" >> ~ubuntu/user_data.log
 echo "Creating mountdiskcommand for /dev/$(lsblk --fs --json | jq -r '.blockdevices[] | select(.children == null and .mountpoints == [null]) | .name')" >> ~ubuntu/user_data.log
@@ -47,7 +45,9 @@ chown ubuntu /extendedDisk
 
 
 echo "Creating mountcommand for ubuntu"
-echo "sudo mount /dev/$(lsblk --fs --json | jq -r '.blockdevices[] | select(.children == null and .mountpoints == [null]) | .name') /extendedDisk" >> mountdiskcommand_ubuntu
+echo "sudo mount /dev/\$(lsblk --fs --json | jq -r '.blockdevices[] | select(.children == null and .mountpoints == [null]) | .name') /extendedDisk" >> ~ubuntu/mountdiskcommand_ubuntu
+chmod 755 ~ubuntu/mountdiskcommand_ubuntu
+chown ubuntu ~ubuntu/mountdiskcommand_ubuntu
 
 
 echo "D/L user_data_non_root.sh" >> ~ubuntu/user_data.log
