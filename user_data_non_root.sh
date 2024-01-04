@@ -5,6 +5,11 @@
 echo "mkdir /extendedDisk/ubuntuExtension" >> ~/user_data_non_root.log
 mkdir /extendedDisk/ubuntuExtension
 
+if [ ! -d .cache ]; then
+    echo "Creating new dir .cache" >> ~/user_data_non_root.log
+    mkdir .cache
+fi
+
 
 echo "moving .cache" >> ~/user_data_non_root.log
 cd ~
