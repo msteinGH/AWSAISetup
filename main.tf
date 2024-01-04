@@ -38,13 +38,13 @@ resource "aws_instance" "plain-ubuntu-ec2" {
   # Ubuntu SSD, WITH PyTorch preinstalled
   # ami = "ami-05b5ef59e0e3e83b4"
 	# 1 GB 1 CPU
-  instance_type = "t2.micro"
+  #instance_type = "t2.micro"
   # 32 GB 8 CPUs
   #instance_type = "t2.large"  
   # 32 GB 8 CPUs
   #instance_type = "t2.2xlarge"
   # 32 GB 16 CPUs
-  #instance_type = "c5a.4xlarge"
+  instance_type = "c5a.4xlarge"
 	key_name = "tf-generic-user-key"
   subnet_id       = aws_subnet.tf-generic-subnet.id
 	associate_public_ip_address = "true"

@@ -36,6 +36,10 @@ curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/Datasets/data
 curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/Datasets/datacamp_workspace_export_2023-12-29_FaceBook_Articles_short.csv >> datacamp_workspace_export_2023-12-29_FaceBook_Articles_short.csv
 curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/Datasets/datacamp_workspace_export_2023-12-29_FaceBook_Articles_very_short.csv >> datacamp_workspace_export_2023-12-29_FaceBook_Articles_very_short.csv
 
+curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/BERT_for_Sequence_Classification_by_Sinan.py >> BERT_for_Sequence_Classification_by_Sinan.py
+
+
+
 cd ~ubuntu
 
 echo "D/L and executing install_via_pip.sh" >> ~/user_data_non_root.log
