@@ -37,6 +37,10 @@ curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/Datasets/data
 curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/Datasets/datacamp_workspace_export_2023-12-29_FaceBook_Articles_very_short.csv >> datacamp_workspace_export_2023-12-29_FaceBook_Articles_very_short.csv
 
 curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/BERT_for_Sequence_Classification_by_Sinan.py >> BERT_for_Sequence_Classification_by_Sinan.py
+mkdir data
+cd data
+curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/data/snips.test.txt >> snips.test.txt
+curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/data/snips.train.txt >> snips.train.txt
 
 
 

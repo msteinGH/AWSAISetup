@@ -15,7 +15,7 @@ pip install transformers sentencepiece
 # required for Sinans BERT classification example
 echo "required for Sinans BERT classification example" >> ~/user_data_non_root.log
 echo "pip install datasets evaluate scikit-learn transformers[torch]" >> ~/user_data_non_root.log
-#pip install datasets evaluate scikit-learn transformers[torch]
+pip install datasets evaluate scikit-learn transformers[torch]
 
 echo "pip install torch" >> ~/user_data_non_root.log
 pip install torch
