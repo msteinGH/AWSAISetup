@@ -25,6 +25,12 @@ echo "pip install sacremoses" >> ~/user_data._non_root.log
 pip install sacremoses
 echo "pip install transformers sentencepieces" >> ~/user_data._non_root.log
 pip install transformers sentencepiece
+
+# required for Sinans BERT classification example
+echo "required for Sinans BERT classification example" >> ~/user_data._non_root.log
+echo "pip install datasets evaluate scikit-learn transformers[torch]" >> ~/user_data._non_root.log
+pip install datasets evaluate scikit-learn transformers[torch]
+
 echo "pip install torch" >> ~/user_data._non_root.log
 pip install torch
 

@@ -42,10 +42,13 @@ resource "aws_instance" "plain-ubuntu-ec2" {
   instance_type = "t2.micro"
 
   # 32 GB 8 CPUs
+  #instance_type = "t2.large"  
+  
+  # 32 GB 8 CPUs
   #instance_type = "t2.2xlarge"
 
   # 32 GB 16 CPUs
-  #instance_type = "c5a.4xlarge"
+ #instance_type = "c5a.4xlarge"
 
 
 	key_name = "tf-generic-user-key"

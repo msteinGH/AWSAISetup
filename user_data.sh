@@ -1,7 +1,7 @@
 #!/bin/bash
 # Ubuntu flavor
-# NOT required for superuser!!
-# not executed for some strange reason???
+# sudo NOT required for superuser!!
+# MOUNT needs to be re-executed after instance type change!!
 
 echo "whoami" >> ~ubuntu/user_data.log
 whoami >> ~ubuntu/user_data.log
@@ -23,12 +23,19 @@ mkdir /extendedDisk
 
 # needs jq to identify unmounted disk name dynamically
 # creating small script dynamically to be executed via sudo
+# CHECK store disk name in VARIABLE
+# DISK_NAME = "/dev/$(lsblk --fs --json | jq -r '.blockdevices[] | select(.children == null and .mountpoints == [null]) | .name')"
+# echo "DISK_NAME: ${DISK_NAME}" >> ~ubuntu/user_data.log
 echo "Creating mountdiskcommand" >> ~ubuntu/user_data.log
 echo "mkfs -t xfs /dev/$(lsblk --fs --json | jq -r '.blockdevices[] | select(.children == null and .mountpoints == [null]) | .name')" >> mountdiskcommand
 echo "mount /dev/$(lsblk --fs --json | jq -r '.blockdevices[] | select(.children == null and .mountpoints == [null]) | .name') /extendedDisk" >> mountdiskcommand
 
 echo "chmod 755 mountdiskcommand" >> ~ubuntu/user_data.log
 chmod 755 mountdiskcommand
+
+# CHECK /etc/fstab for automount after restart/change of machine specs
+# the following seems to be wrong in some way, defaults and other settings in conflict
+# /dev/xvdh	/extendedDisk	xfs	defaults,uid=1000,gid=1000,umask=022	0	0
 
 ./mountdiskcommand
 
