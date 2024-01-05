@@ -4,6 +4,7 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer, Mari
 # BERT classification
 tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
 sequence_clf_model = AutoModelForSequenceClassification.from_pretrained(
+    'bert-base-uncased'
     'bert-base-uncased',
     num_labels=len(7)
 )

@@ -7,6 +7,15 @@
 # aws_secret_access_key = XXX
 # aws_access_key_id = YYY
 
+# TODOS
+# run BERT training on 32 CPU machine
+# - maybe adjust parameters/batch sizes
+# - check BERT training optimizations
+# Create Q&A model
+# - have it read book from OR?
+# - have it read some other large PDF/text
+# Start using GIT branches??
+# - this way no hard merge conflicts?? 
 provider "aws" {
 	#region 		= "us-east-1"
     region 		= "${var.region}"
@@ -20,44 +29,24 @@ resource "aws_key_pair" "tf-generic-user-key" {
 
 
 
-# slowing down individual executions
-# installing and starting helloworld tomcat on my-first-tf-instance-with-ssh-user-data-file at port 8080
-# http://IP_ADDRESS:8080/test/index.jsp
-  #module "sample_ec2_instances_with_user_data" {
-  #source = "./Modules/EC2"
-  #subnet = aws_subnet.tf-generic-subnet.id
-  #security_groups = [aws_security_group.tf-allow-tcp-8080-8081.id,aws_security_group.tf-allow-ssh.id]
-  #key_name = "tf-generic-user-key"
-#}
-
-
 # set up EC2 instance
 resource "aws_instance" "plain-ubuntu-ec2" {
 # plain Ubuntu SSD
  ami = "ami-0c7217cdde317cfec" 
-  # Ubuntu SSD, WITH PyTorch preinstalled
+  # Ubuntu SSD, WITH PyTorch preinstalled??
   # ami = "ami-05b5ef59e0e3e83b4"
 	# 1 CPU 1 GB
   #instance_type = "t2.micro"
-  
+    # 64 GB 32 CPUs c5 Intel (better?), c5a AMD
+  instance_type = "c5a.8xlarge"
+
   # 2 CPUs 8 GB 
   #instance_type = "t2.large"  
-  
   # 8 CPUs 32 GB 
   #instance_type = "t2.2xlarge"
-  
   # 32 GB 16 CPUs c5 Intel (better?), c5a AMD
   #instance_type = "c5.4xlarge"
-  
-  # 64 GB 32 CPUs c5 Intel (better?), c5a AMD
-  # seems to be largest one possible as of now
-  instance_type = "c5a.8xlarge"
-  
-  # 16 CPUs/GPUs?? 32 GB  not supported by OReilly
-  #instance_type = "g3.4xlarge" 
-  
-  # 61 GB 8 CPUs/GPUs?? not supported by OReilly as a change
-  #instance_type = "p3.2xlarge"
+
 	
   key_name = "tf-generic-user-key"
   subnet_id       = aws_subnet.tf-generic-subnet.id
@@ -87,6 +76,7 @@ resource "aws_volume_attachment" "python-venv-ebs-volume-attachment" {
 }
 
 
+# Standard Networking
 
 # create VPC
 resource "aws_vpc" "tf-generic-vpc" {
@@ -157,8 +147,6 @@ resource "aws_security_group" "tf-allow-tcp-8080-8081" {
     Name = "tf-allow-tcp-8080"
   }
 }
-
-
 
 # create security group inbound via SSH from ALL, 
 resource "aws_security_group" "tf-allow-ssh" {
