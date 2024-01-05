@@ -20,4 +20,4 @@ pip install datasets evaluate scikit-learn transformers[torch]
 echo "pip install torch" >> ~/user_data_non_root.log
 pip install torch
 
-python DownloadAIComponents.py
+python GITRepos/AWSAISetup/AI/DownloadAIComponents.py

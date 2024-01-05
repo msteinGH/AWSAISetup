@@ -50,6 +50,7 @@ resource "aws_instance" "plain-ubuntu-ec2" {
   #instance_type = "c5.4xlarge"
   
   # 64 GB 32 CPUs c5 Intel (better?), c5a AMD
+  # seems to be largest one possible as of now
   instance_type = "c5a.8xlarge"
   
   # 16 CPUs/GPUs?? 32 GB  not supported by OReilly
