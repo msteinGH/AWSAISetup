@@ -37,15 +37,28 @@ resource "aws_instance" "plain-ubuntu-ec2" {
  ami = "ami-0c7217cdde317cfec" 
   # Ubuntu SSD, WITH PyTorch preinstalled
   # ami = "ami-05b5ef59e0e3e83b4"
-	# 1 GB 1 CPU
+	# 1 CPU 1 GB
   #instance_type = "t2.micro"
-  # 32 GB 8 CPUs
+  
+  # 2 CPUs 8 GB 
   #instance_type = "t2.large"  
-  # 32 GB 8 CPUs
+  
+  # 8 CPUs 32 GB 
   #instance_type = "t2.2xlarge"
-  # 32 GB 16 CPUs
-  instance_type = "c5a.4xlarge"
-	key_name = "tf-generic-user-key"
+  
+  # 32 GB 16 CPUs c5 Intel (better?), c5a AMD
+  #instance_type = "c5.4xlarge"
+  
+  # 64 GB 32 CPUs c5 Intel (better?), c5a AMD
+  instance_type = "c5a.8xlarge"
+  
+  # 16 CPUs/GPUs?? 32 GB  not supported by OReilly
+  #instance_type = "g3.4xlarge" 
+  
+  # 61 GB 8 CPUs/GPUs?? not supported by OReilly as a change
+  #instance_type = "p3.2xlarge"
+	
+  key_name = "tf-generic-user-key"
   subnet_id       = aws_subnet.tf-generic-subnet.id
 	associate_public_ip_address = "true"
   vpc_security_group_ids = [aws_security_group.tf-allow-ssh.id]

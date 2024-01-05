@@ -42,13 +42,17 @@ cd data
 curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/data/snips.test.txt >> snips.test.txt
 curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/data/snips.train.txt >> snips.train.txt
 
-
-
 cd ~ubuntu
+
+echo "D/L GITRepos/" >> ~/user_data_non_root.log
+mkdir GITRepos
+cd GITRepos
+git clone https://github.com/msteinGH/AISamples.git
+git clone https://github.com/msteinGH/AWSAISetup.git
 
 echo "D/L and executing install_via_pip.sh" >> ~/user_data_non_root.log
 curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/install_python_AI_prerequisites.sh >> install_python_AI_prerequisites.sh
-chmod 755 install_via_pip.sh
-./install_via_pip
+chmod 755 install_python_AI_prerequisites.sh
+./install_python_AI_prerequisites.sh
 exit
   
