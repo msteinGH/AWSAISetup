@@ -35,8 +35,6 @@ echo "chmod 755 mountdiskcommand" >> ~ubuntu/user_data.log
 chmod 755 mountdiskcommand
 
 # CHECK /etc/fstab for automount after restart/change of machine specs
-# the following seems to be wrong in some way, defaults and other settings in conflict
-# /dev/xvdh	/extendedDisk	xfs	defaults,uid=1000,gid=1000,umask=022	0	0
 
 ./mountdiskcommand
 
