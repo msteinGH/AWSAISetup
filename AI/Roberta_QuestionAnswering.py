@@ -12,11 +12,16 @@ news_data = pd.read_csv(data_path)
 english_texts = news_data.loc[:,"content"]
 
 
-print ("Sample text: ", english_texts[1])
+#print ("Sample text: ", english_texts[1])
 
+text_file = open(r"./PDFData/ConvertedPdf_MultiCloud.txt", 'r')
+#text_file = open(r"./PDFData/ConvertedPdf_OracleCloud.txt", 'r')
+
+context = text_file.read()
+#context = english_texts[1]
 QA_input = {
-          'question': 'what did the CSO do?',
-          'context': english_texts[1]
+          'question': 'what are the three ways to configure federation?',
+          'context': context
           }
 
 
