@@ -47,7 +47,7 @@ curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/AI/data/snips.tr
 cd ~ubuntu
 
 echo "D/L and executing install_via_pip.sh" >> ~/user_data_non_root.log
-curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/install_via_pip.sh >> install_via_pip.sh
+curl https://raw.githubusercontent.com/msteinGH/AWSAISetup/main/install_via_pip.sh >> testt_local_pc_install_via_pip.sh
 chmod 755 install_via_pip.sh
 ./install_via_pip
 exit
