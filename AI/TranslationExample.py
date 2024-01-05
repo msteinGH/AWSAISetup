@@ -1,6 +1,6 @@
 
 import pandas as pd
-data_path = "DataSets/datacamp_workspace_export_2023-12-29_FaceBook_Articles_very_short.csv"
+data_path = "Datasets/datacamp_workspace_export_2023-12-29_FaceBook_Articles_very_short.csv"
 news_data = pd.read_csv(data_path)
 news_data.info()
 news_data.head(10)

@@ -5,7 +5,7 @@ model_name = "deepset/roberta-base-squad2"
 task = 'question-answering'
 QA_model = pipeline(task, model=model_name, tokenizer=model_name)
 
-data_path = "DataSets/datacamp_workspace_export_2023-12-29_FaceBook_Articles_very_short.csv"
+data_path = "Datasets/datacamp_workspace_export_2023-12-29_FaceBook_Articles_very_short.csv"
 news_data = pd.read_csv(data_path)
 
 # extract column "content"
@@ -19,11 +19,13 @@ text_file = open(r"./PDFData/ConvertedPdf_MultiCloud.txt", 'r')
 
 context = text_file.read()
 #context = english_texts[1]
+question = 'which company created OCI?'
 QA_input = {
-          'question': 'what are the three ways to configure federation?',
+          'question': question,
           'context': context
           }
 
 
 model_response = QA_model(QA_input)
+print ("Question:", question)
 print ("Response: ",pd.DataFrame([model_response]))

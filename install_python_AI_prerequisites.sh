@@ -5,8 +5,8 @@
 cd ~ubuntu
 source .venv/bin/activate
 
-echo "pip install pandas" >> ~/user_data_non_root.log
-pip install pandas
+echo "pip install pandas PyPDF2" >> ~/user_data_non_root.log
+pip install pandas PyPDF2
 echo "pip install sacremoses" >> ~/user_data_non_root.log
 pip install sacremoses
 echo "pip install transformers sentencepiece" >> ~/user_data_non_root.log

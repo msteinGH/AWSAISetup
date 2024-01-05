@@ -37,7 +37,7 @@ resource "aws_instance" "plain-ubuntu-ec2" {
   # ami = "ami-05b5ef59e0e3e83b4"
 	# 1 CPU 1 GB
   #instance_type = "t2.micro"
-    # 64 GB 32 CPUs c5 Intel (better?), c5a AMD
+  # 64 GB 32 CPUs (largest we can get??) c5 Intel (better?), c5a AMD
   instance_type = "c5a.8xlarge"
 
   # 2 CPUs 8 GB 
