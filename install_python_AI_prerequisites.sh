@@ -9,7 +9,7 @@ echo "pip install pandas" >> ~/user_data_non_root.log
 pip install pandas
 echo "pip install sacremoses" >> ~/user_data_non_root.log
 pip install sacremoses
-echo "pip install transformers sentencepieces" >> ~/user_data_non_root.log
+echo "pip install transformers sentencepiece" >> ~/user_data_non_root.log
 pip install transformers sentencepiece
 
 # required for Sinans BERT classification example
@@ -19,3 +19,5 @@ pip install datasets evaluate scikit-learn transformers[torch]
 
 echo "pip install torch" >> ~/user_data_non_root.log
 pip install torch
+
+python DownloadAIComponents.py
