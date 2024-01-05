@@ -8,7 +8,7 @@ sequence_clf_model = AutoModelForSequenceClassification.from_pretrained(
     7,
 )
 
-#translation models
+#translation models 
 tokenizer_DE = MarianTokenizer.from_pretrained('Helsinki-NLP/opus-mt-en-de')
 model_DE = MarianMTModel.from_pretrained('Helsinki-NLP/opus-mt-en-de')
 tokenizer_FR = MarianTokenizer.from_pretrained('Helsinki-NLP/opus-mt-en-fr')
