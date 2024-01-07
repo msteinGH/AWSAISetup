@@ -9,13 +9,16 @@
 
 # TODOS
 # run BERT training on 32 CPU machine
-# - maybe adjust parameters/batch sizes
+# - maybe adjust parameters/batch sizes > 32 
 # - check BERT training optimizations
 # Create Q&A model
-# - have it read book from OR?
-# - have it read some other large PDF/text
+# - context approach not scalable, need to go for pretraining
+# -- import/read text once, answer questions faster
 # Start using GIT branches??
 # - this way no hard merge conflicts?? 
+# consolidate AISamples <-> AWSAISetup
+# - have AISetup use AISamples to only have a single source of truth
+
 provider "aws" {
 	#region 		= "us-east-1"
     region 		= "${var.region}"
